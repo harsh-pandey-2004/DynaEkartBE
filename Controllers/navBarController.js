@@ -48,8 +48,8 @@ const GetNavBarItems = async (req, res) => {
 
 const deleteNavItems = async (req, res) => {
   try {
-    const NavItem = req.body;
-    const checkdelete = await Navbar.findOneAndDelete(NavItem);
+    const { name } = req.body;
+    const checkdelete = await Navbar.findAndDelete({ name });
     if (!checkdelete) {
       return res.status(400).json({ message: "no item found to delete" });
     }
@@ -63,11 +63,16 @@ const deleteNavItems = async (req, res) => {
 
 const editNavBarItem = async (req, res) => {
   try {
-    const NavItemId = req.param;
-    const newName = req.body;
-    const checkupdate = await Navbar.findOneAndUpdate(NavItemId, {
-      name: newName,
-    });
+    const NavItemId = req.params.id;
+    const { name } = req.body;
+    console.log(name);
+    const checkupdate = await Navbar.findByIdAndUpdate(
+      NavItemId,
+      {
+        name,
+      },
+      { new: true }
+    );
     if (!checkupdate) {
       return res.status(400).json({ message: "no item found to update" });
     }
