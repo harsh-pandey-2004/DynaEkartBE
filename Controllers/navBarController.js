@@ -36,7 +36,7 @@ const GetNavBarItems = async (req, res) => {
       });
     }
     return res.status(200).json({
-      NavBarData,
+      data: NavBarData,
       message: "Data Fetched successfully",
     });
   } catch (error) {
