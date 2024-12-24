@@ -2,8 +2,8 @@ const logo = require("../Models/logoModel");
 
 const addLogo = async (req, res) => {
   try {
-    const imageurl = req.body;
-    const newlogo = new logo(imageurl);
+    const { imageurl } = req.body;
+    const newlogo = new logo({ imageurl });
     const savedLogo = await newlogo.save();
     if (!savedLogo) {
       return res.status(400).json({ message: "Failed to add logo" });
@@ -25,13 +25,11 @@ const getLogo = async (req, res) => {
         message: "No Data in Database",
       });
     }
-    return res
-      .status(200)
-      .json({
-        data: logoimg,
-        success: true,
-        mesage: "logo fetched successfully",
-      });
+    return res.status(200).json({
+      data: logoimg,
+      success: true,
+      mesage: "logo fetched successfully",
+    });
   } catch (error) {
     return res
       .status(500)

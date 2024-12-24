@@ -8,6 +8,8 @@ const navbarroutes = require("./Routes/NavBarRoutes");
 const productRoutes = require("./Routes/productRoutes");
 const logoRoutes = require("./Routes/logoRoutes");
 const CategoryRoutes = require("./Routes/CategoryListRoutes");
+const BlogRoutes = require("./Routes/blogRoutes");
+// const footerRoutes = require("./Routes/footerRoutes");
 
 const server = express();
 
@@ -25,6 +27,8 @@ server.use("/navbar", navbarroutes);
 server.use("/product", productRoutes);
 server.use("/logo", logoRoutes);
 server.use("/category", CategoryRoutes);
+server.use("/blog", BlogRoutes);
+// server.use("/footer", footerRoutes);
 
 server.get("/", (req, res) => {
   res.send("Welcome to the Express Server!");

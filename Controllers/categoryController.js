@@ -15,7 +15,7 @@ const addCategory = async (req, res) => {
     const saveCategory = await newCategory.save();
     res
       .status(201)
-      .json({ message: "Category added successfully", saveCategory });
+      .json({ message: "Category added successfully", data: saveCategory });
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -47,22 +47,20 @@ const editCategory = async (req, res) => {
   try {
     const itemId = req.params.id;
     const { name, link, categorylogo } = req.body;
-    const checkItemData = await category.findById(itemId);
+    const checkItemData = await category.findByIdAndUpdate(
+      itemId,
+      { name, link, categorylogo },
+      { new: true }
+    );
     if (!checkItemData) {
       return res.status(404).json({
         success: false,
         message: "Category Item is not Found",
       });
     }
-    const newItem = new category({
-      name,
-      link,
-      categorylogo,
-    });
-    const updatedItem = await newItem.save();
     return res.status(200).json({
       success: true,
-      data: updatedItem,
+      data: checkItemData,
       message: "Item Updated successfully",
     });
   } catch (error) {
