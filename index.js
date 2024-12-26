@@ -5,8 +5,11 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const connectDB = require("./Config/db");
 const navbarroutes = require("./Routes/NavBarRoutes");
-const BannerRoutes = require("./Routes/BannerRoutes");
-const BrandRoutes = require("./Routes/BrandRoute")
+const productRoutes = require("./Routes/productRoutes");
+const logoRoutes = require("./Routes/logoRoutes");
+const CategoryRoutes = require("./Routes/CategoryListRoutes");
+const BlogRoutes = require("./Routes/blogRoutes");
+// const footerRoutes = require("./Routes/footerRoutes");
 
 const server = express();
 
@@ -16,14 +19,11 @@ server.use(
     credentials: true,
   })
 );
-server.use(bodyParser.json());
+server.use(express.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 connectDB();
 
 server.use("/navbar", navbarroutes);
-server.use("/banner",BannerRoutes);
-server.use("/brand",BrandRoutes);
-
 
 server.get("/", (req, res) => {
   res.send("Welcome to the Express Server!");

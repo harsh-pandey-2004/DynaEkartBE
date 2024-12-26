@@ -10,7 +10,7 @@ const {
 
 router.post("/add", addNavBarItems);
 router.get("/get", GetNavBarItems);
-router.patch("/edit", editNavBarItem);
+router.patch("/edit/:id", editNavBarItem);
 router.delete("/delete", deleteNavItems);
 
 module.exports = router;
