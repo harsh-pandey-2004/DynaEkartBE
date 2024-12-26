@@ -26,6 +26,14 @@ server.use(bodyParser.urlencoded({ extended: true }));
 connectDB();
 
 server.use("/navbar", navbarroutes);
+server.use("/banner",BannerRoutes);
+server.use("/brand",BrandRoutes);
+
+server.use("/product", productRoutes);
+server.use("/logo", logoRoutes);
+server.use("/category", CategoryRoutes);
+server.use("/blog", BlogRoutes);
+// server.use("/footer", footerRoutes);
 
 server.get("/", (req, res) => {
   res.send("Welcome to the Express Server!");
