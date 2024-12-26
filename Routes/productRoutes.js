@@ -6,7 +6,6 @@ const {
   getProduct,
   deleteProduct,
 } = require("../Controllers/productController");
-// const { authenticateSeller } = require("../middleware/auth");
 
 const router = express.Router();
 
