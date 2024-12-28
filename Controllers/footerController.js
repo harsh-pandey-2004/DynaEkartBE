@@ -2,25 +2,18 @@ const footer = require("../Models/FooterModel");
 
 const addFooter = async (req, res) => {
   try {
-    const { headersection, itemname, itemlink, itemicon } = req.body;
+    const { headersection, Items } = req.body;
     const checkexisting = await footer.findOne({ headersection });
     if (checkexisting) {
       return res
         .status(400)
         .json({ success: false, message: "this header is already exist" });
     }
-    const Items = [
-      {
-        itemname,
-        itemlink,
-        itemicon,
-      },
-    ];
     const newFooter = new footer({
       headersection,
       Items,
     });
-    const footerData = await newFooter.save();
+    await newFooter.save();
     return res.status(200).json({
       success: true,
       message: "footer header added successfully",
@@ -28,7 +21,7 @@ const addFooter = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       success: false,
-      message: "Error adding footer Items",
+      message: "Error adding footer Items" + error,
     });
   }
 };
@@ -57,6 +50,29 @@ const getFooter = async (req, res) => {
 
 const editFooterData = async (req, res) => {
   try {
+    const { headersection, Items } = req.body;
+    const { id } = req.params;
+    const checkexisting = await footer.findById(id);
+    if (!checkexisting) {
+      return res.status(404).json({
+        success: false,
+        message: "Footer item not found",
+      });
+    }
+    const updatedFooter = await footer.findByIdAndUpdate(id, {
+      headersection,
+      Items,
+    });
+    if (!updatedFooter) {
+      return res.status(404).json({
+        success: false,
+        message: "Footer item not found for update",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Footer item updated successfully",
+    });
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -65,4 +81,26 @@ const editFooterData = async (req, res) => {
   }
 };
 
-module.exports = { addFooter, getFooter };
+const DeleteFooter = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedFooter = await footer.findByIdAndDelete(id);
+    if (!deletedFooter) {
+      return res.status(404).json({
+        success: false,
+        message: "Footer item not found for delete",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Footer item deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Error Deleting Footer - " + error.message,
+    });
+  }
+};
+
+module.exports = { addFooter, getFooter, editFooterData, DeleteFooter };
