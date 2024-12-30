@@ -12,7 +12,7 @@ const logoRoutes = require("./Routes/logoRoutes");
 const CategoryRoutes = require("./Routes/CategoryListRoutes");
 const BlogRoutes = require("./Routes/blogRoutes");
 const footerRoutes = require("./Routes/footerRoutes");
-// const HeroBannerRoutes = require("./Routes/heroBannerRoutes");
+const HeroBannerRoutes = require("./Routes/heroBannerRoutes");
 
 const server = express();
 
@@ -29,7 +29,7 @@ connectDB();
 server.use("/navbar", navbarroutes);
 server.use("/banner", BannerRoutes);
 server.use("/brand", BrandRoutes);
-// server.use("/herobanner", HeroBannerRoutes);
+server.use("/herobanner", HeroBannerRoutes);
 server.use("/product", productRoutes);
 server.use("/logo", logoRoutes);
 server.use("/category", CategoryRoutes);
