@@ -13,7 +13,6 @@ const FooterSchema = new mongoose.Schema({
       },
       itemicon: {
         type: String,
-        required: true,
       },
       itemlink: {
         type: String,
