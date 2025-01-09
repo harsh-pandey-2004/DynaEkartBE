@@ -7,12 +7,11 @@ const userAuthentication = async (req, res, next) => {
     return res.status(401).json({ message: "Unauthorized" });
   }
   try {
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    const user = await user.findOne({ _id: decoded.id });
-    if (!user) {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (decoded.role !== "user") {
       return res.status(401).json({ message: "Unauthorized" });
     }
-    req.user = user;
+    req.user = decoded;
     next();
   } catch (error) {
     return res.status(401).json({ message: "Unauthorized" });
@@ -29,10 +28,7 @@ const adminAuthentication = async (req, res, next) => {
     if (decoded.role !== "admin") {
       return res.status(401).json({ message: "Unauthorized" });
     }
-    req.user = {
-      role: decoded.role === "admin" ? "admin" : "user",
-      id: decoded.id,
-    };
+    req.user = decoded
     next();
   } catch (error) {
     return res.status(401).json({ message: "Unauthorized" });
