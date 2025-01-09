@@ -113,10 +113,29 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const FindByCategory = async (req, res) => {
+  try {
+    const { category } = req.body;
+    const products = await Product.find({ category });
+    if (!products) {
+      return res.status(404).json({ message: "No products found" });
+    }
+    return res.status(200).json({
+      message: "Products found successfully",
+      data: products,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error finding products by category - " + error.message,
+    });
+  }
+};
+
 module.exports = {
   addProduct,
   getAllProducts,
   updateProduct,
   getProduct,
   deleteProduct,
+  FindByCategory,
 };
