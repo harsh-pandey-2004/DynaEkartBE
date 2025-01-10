@@ -43,6 +43,28 @@ const getBlogs = async (req, res) => {
   }
 };
 
+const getSingleBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const blogData = await blog.findOneById(id);
+    if (!blogData) {
+      return res.status(404).json({
+        success: false,
+        message: "No data found in Blog",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "Data fetched Successfully",
+      data: blogData,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Error getting blog - " + error.message,
+    });
+  }
+}
+
 const deleteBlogItem = async (req, res) => {
   try {
     const { id } = req.params;
@@ -94,4 +116,4 @@ const EditBlogItem = async (req, res) => {
   }
 };
 
-module.exports = { AddBlogdata, getBlogs, EditBlogItem, deleteBlogItem };
+module.exports = { AddBlogdata, getBlogs, getSingleBlog, EditBlogItem, deleteBlogItem };

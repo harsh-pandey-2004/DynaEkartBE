@@ -69,7 +69,7 @@ const ListAllUsers = async (req, res) => {
   }
 };
 
-const getData = async (req, res) => {
+const Profile = async (req, res) => {
   try {
     const { id } = req.params;
     const userData = await user.findById(id);
@@ -86,4 +86,44 @@ const getData = async (req, res) => {
   }
 };
 
-module.exports = { CreateUser, Login, ListAllUsers, getData };
+const UpdateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, email, phone, role } = req.body;
+    const userData = await user.findByIdAndUpdate(id, {
+      name,
+      email,
+      phone,
+      role,
+    });
+    if (!userData) {
+      return res.status(400).json({ message: "User not found" });
+    }
+    res
+      .status(200)
+      .json({ message: "User data updated successfully", data: userData });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error updating data - " + error.message });
+  }
+}
+
+const DeleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userData = await user.findByIdAndDelete(id);
+    if (!userData) {
+      return res.status(400).json({ message: "User not found" });
+    }
+    res
+      .status(200)
+      .json({ message: "User deleted successfully", data: userData });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Error deleting data - " + error.message });
+  }
+}
+
+module.exports = { CreateUser, Login, ListAllUsers, Profile, UpdateUser, DeleteUser };
