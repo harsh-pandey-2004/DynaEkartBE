@@ -38,13 +38,10 @@ server.use("/logo", logoRoutes);
 server.use("/category", CategoryRoutes);
 server.use("/blog", BlogRoutes);
 server.use("/footer", footerRoutes);
-
 server.use("/user", userRoutes);
-
 server.get("/", (req, res) => {
   res.send("Welcome to the Express Server!");
 });
-
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
