@@ -13,6 +13,8 @@ const CategoryRoutes = require("./Routes/CategoryListRoutes");
 const BlogRoutes = require("./Routes/blogRoutes");
 const footerRoutes = require("./Routes/footerRoutes");
 const HeroBannerRoutes = require("./Routes/heroBannerRoutes");
+const userRoutes = require("./Routes/userRoutes");
+const cookieParser = require("cookie-parser");
 
 const server = express();
 
@@ -22,6 +24,7 @@ server.use(
     credentials: true,
   })
 );
+server.use(cookieParser());
 server.use(express.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 connectDB();
@@ -35,6 +38,8 @@ server.use("/logo", logoRoutes);
 server.use("/category", CategoryRoutes);
 server.use("/blog", BlogRoutes);
 server.use("/footer", footerRoutes);
+
+server.use("/user", userRoutes);
 
 server.get("/", (req, res) => {
   res.send("Welcome to the Express Server!");
