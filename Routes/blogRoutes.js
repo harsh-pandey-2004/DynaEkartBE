@@ -4,12 +4,14 @@ const router = express.Router();
 const {
   AddBlogdata,
   getBlogs,
+  getSingleBlog,
   deleteBlogItem,
   EditBlogItem,
 } = require("../Controllers/blogController");
 
 router.post("/add", AddBlogdata);
-router.get("/getblog", getBlogs);
+router.get("/listblog", getBlogs);
+router.get("/getblog/:id", getSingleBlog);
 router.patch("/update/:id", EditBlogItem);
 router.delete("/delete/:id", deleteBlogItem);
 
