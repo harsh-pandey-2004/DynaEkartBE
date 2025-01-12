@@ -1,4 +1,5 @@
 const user = require("../Models/userModel");
+const OTP = require("../Models/otpModel");
 const jwt = require("jsonwebtoken");
 
 const CreateUser = async (req, res) => {
@@ -25,10 +26,14 @@ const CreateUser = async (req, res) => {
 
 const Login = async (req, res) => {
   try {
-    const { email, phone } = req.body;
+    const { email, phone, otp } = req.body;
     const userData = await user.findOne({ $or: [{ email }, { phone }] });
     if (!userData) {
       return res.status(400).json({ message: "Invalid email or phone number" });
+    }
+    const otpData = await OTP.findOne({ user: userData._id, OTP: otp });
+    if (!otpData) {
+      return res.status(400).json({ message: "Invalid OTP" });
     }
     const token = jwt.sign(
       { id: userData._id, role: userData.role },
