@@ -10,10 +10,6 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  //   password: {
-  //     type: String,
-  //     required: true,
-  //   },
   role: {
     type: String,
     enum: ["admin", "user"],
@@ -23,6 +19,20 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  cart: [
+    {
+      _id: false,
+      productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+    },
+  ]
 });
 
 module.exports = new mongoose.model("user", UserSchema);

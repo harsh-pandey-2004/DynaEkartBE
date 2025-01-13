@@ -14,6 +14,7 @@ const BlogRoutes = require("./Routes/blogRoutes");
 const footerRoutes = require("./Routes/footerRoutes");
 const HeroBannerRoutes = require("./Routes/heroBannerRoutes");
 const userRoutes = require("./Routes/userRoutes");
+const cartRoutes = require("./Routes/cartRoutes");
 const cookieParser = require("cookie-parser");
 
 const server = express();
@@ -40,6 +41,7 @@ server.use("/blog", BlogRoutes);
 server.use("/footer", footerRoutes);
 
 server.use("/user", userRoutes);
+server.use("/cart", cartRoutes);
 
 server.get("/", (req, res) => {
   res.send("Welcome to the Express Server!");
