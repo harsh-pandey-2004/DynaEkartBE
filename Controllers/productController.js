@@ -80,6 +80,10 @@ const getProduct = async (req, res) => {
     const { id } = req.params;
     //const sellerId = req.seller.id;
     const product = await Product.findById(id)
+    // .populate({
+    //   path: "sellerId",
+    //   select: "name",
+    // });
 
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
