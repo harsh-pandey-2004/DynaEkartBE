@@ -32,7 +32,13 @@ const UserSchema = new mongoose.Schema({
         required: true,
       },
     },
-  ]
+  ],
+  wishlist: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
 });
 
 module.exports = new mongoose.model("user", UserSchema);
