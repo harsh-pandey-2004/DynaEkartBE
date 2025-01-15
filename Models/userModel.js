@@ -35,6 +35,7 @@ const UserSchema = new mongoose.Schema({
   ],
   wishlist: [
     {
+      _id: false,
       type: mongoose.Schema.Types.ObjectId,
       ref: "Product",
     },
