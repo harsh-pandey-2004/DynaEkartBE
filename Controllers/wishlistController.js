@@ -15,12 +15,13 @@ const addtoWishlist = async (req, res) => {
     }
     const wishlistData = userData.wishlist;
 
-    let findKey = wishlistData.find((item) => item?.toString() === productId);
-
+    const findKey = wishlistData.find(
+      (item) => item?.productId?.toString() === productId.toString()
+    );
     if (findKey) {
       return res.status(400).json({ message: "Product already in wishlist" });
     } else {
-      wishlistData.push(productId);
+      wishlistData.push({productId: productId});
     }
     await user.findByIdAndUpdate(id, { wishlist: wishlistData }, { new: true });
     res.status(200).json({ message: "Product Added to Wishlist Successfully" });
@@ -65,7 +66,8 @@ const ListWishlist = async (req, res) => {
     const userData = await user
       .findById(id)
       .select("wishlist")
-      .populate({ path: "wishlist.productId", select: "-quantity" });
+      .populate({ path: "wishlist", select: "-quantity" });
+    console.log(userData);
     if (!userData) {
       return res.status(404).json({ message: "User not found" });
     }
