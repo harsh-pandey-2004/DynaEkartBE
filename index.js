@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const connectDB = require("./Config/db");
 const navbarroutes = require("./Routes/NavBarRoutes");
 const BannerRoutes = require("./Routes/BannerRoutes");
@@ -14,7 +15,8 @@ const BlogRoutes = require("./Routes/blogRoutes");
 const footerRoutes = require("./Routes/footerRoutes");
 const HeroBannerRoutes = require("./Routes/heroBannerRoutes");
 const userRoutes = require("./Routes/userRoutes");
-const cookieParser = require("cookie-parser");
+const cartRoutes = require("./Routes/cartRoutes");
+const wishlistRoutes = require("./Routes/wishlistRoutes");
 
 const server = express();
 
@@ -26,9 +28,9 @@ server.use(
 );
 server.use(cookieParser());
 server.use(express.json());
-server.use(bodyParser.urlencoded({ extended: true }));
+// server.use(bodyParser.urlencoded({ extended: true }));
 connectDB();
-
+//UI Routes
 server.use("/navbar", navbarroutes);
 server.use("/banner", BannerRoutes);
 server.use("/brand", BrandRoutes);
@@ -38,7 +40,11 @@ server.use("/logo", logoRoutes);
 server.use("/category", CategoryRoutes);
 server.use("/blog", BlogRoutes);
 server.use("/footer", footerRoutes);
+//API Routes
 server.use("/user", userRoutes);
+server.use("/cart", cartRoutes);
+server.use("/wishlist", wishlistRoutes);
+
 server.get("/", (req, res) => {
   res.send("Welcome to the Express Server!");
 });
