@@ -44,7 +44,7 @@ const removeFromWishlist = async (req, res) => {
     }
     const wishlistData = userData.wishlist;
 
-    const findKey = wishlistData.find((item) => item?.toString() === productId);
+    const findKey = wishlistData.find((item) => item?.productId?.toString() === productId);
     if (!findKey) {
       return res.status(400).json({ message: "Product not in wishlist" });
     } else {

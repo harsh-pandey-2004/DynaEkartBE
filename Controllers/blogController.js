@@ -46,7 +46,7 @@ const getBlogs = async (req, res) => {
 const getSingleBlog = async (req, res) => {
   try {
     const { id } = req.params;
-    const blogData = await blog.findOneById(id);
+    const blogData = await blog.findyId(id);
     if (!blogData) {
       return res.status(404).json({
         success: false,
